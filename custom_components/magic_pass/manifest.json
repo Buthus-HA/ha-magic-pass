@@ -1,0 +1,13 @@
+{
+  "domain": "magic_pass",
+  "name": "Magic Pass",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": ["http", "frontend", "websocket_api"],
+  "documentation": "https://github.com/Buthus-HA/ha-magic-pass",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/Buthus-HA/ha-magic-pass/issues",
+  "requirements": [],
+  "version": "0.2.0"
+}

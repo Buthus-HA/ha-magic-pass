@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Magic Pass",
+        "description": "Wähle den Startpunkt für die Berechnung der Fahrzeiten zu den Skigebieten.",
+        "data": {
+          "location": "Startpunkt",
+          "max_travel": "Maximale Fahrzeit für das beste Skigebiet",
+          "scan_interval": "Aktualisierungsintervall"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Für diesen Startpunkt existiert bereits ein Magic-Pass-Eintrag."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Magic-Pass-Optionen",
+        "description": "Die unten gewählten Skigebiete erhalten je einen eigenen Sensor, praktisch für Automationen.",
+        "data": {
+          "location": "Startpunkt",
+          "max_travel": "Maximale Fahrzeit für das beste Skigebiet",
+          "scan_interval": "Aktualisierungsintervall",
+          "tracked_stations": "Skigebiete als Sensoren"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "open_resorts": { "name": "Offene Skigebiete", "unit_of_measurement": "Skigebiete" },
+      "open_near": { "name": "Offene Skigebiete in der Nähe", "unit_of_measurement": "Skigebiete" },
+      "best_resort": { "name": "Bestes Skigebiet" },
+      "best_score": { "name": "Bewertung bestes Skigebiet" },
+      "last_update": { "name": "Letzte Aktualisierung" },
+      "station": {
+        "name": "{name}",
+        "state": { "open": "Offen", "partial": "Teilweise offen", "closed": "Geschlossen" }
+      }
+    }
+  }
+}

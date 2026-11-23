@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Magic Pass",
+        "description": "Choose the starting point used to compute travel times to the resorts.",
+        "data": {
+          "location": "Starting point",
+          "max_travel": "Maximum travel time for the best resort",
+          "scan_interval": "Update interval"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "A Magic Pass entry already exists for this starting point."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Magic Pass options",
+        "description": "Resorts selected below get their own sensor, handy for automations.",
+        "data": {
+          "location": "Starting point",
+          "max_travel": "Maximum travel time for the best resort",
+          "scan_interval": "Update interval",
+          "tracked_stations": "Resorts exposed as sensors"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "open_resorts": { "name": "Open resorts", "unit_of_measurement": "resorts" },
+      "open_near": { "name": "Open resorts nearby", "unit_of_measurement": "resorts" },
+      "best_resort": { "name": "Best resort" },
+      "best_score": { "name": "Best resort score" },
+      "last_update": { "name": "Last update" },
+      "station": {
+        "name": "{name}",
+        "state": { "open": "Open", "partial": "Partly open", "closed": "Closed" }
+      }
+    }
+  }
+}

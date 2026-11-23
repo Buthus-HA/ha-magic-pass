@@ -1,0 +1,11 @@
+{
+  "entity": {
+    "sensor": {
+      "open_resorts": { "default": "mdi:ski" },
+      "open_near": { "default": "mdi:map-marker-radius" },
+      "best_resort": { "default": "mdi:trophy-outline" },
+      "best_score": { "default": "mdi:star-outline" },
+      "last_update": { "default": "mdi:update" }
+    }
+  }
+}

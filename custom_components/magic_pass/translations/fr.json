@@ -1,0 +1,45 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Magic Pass",
+        "description": "Choisis le point de départ utilisé pour calculer les temps de trajet vers les stations.",
+        "data": {
+          "location": "Point de départ",
+          "max_travel": "Temps de trajet maximal pour la meilleure station",
+          "scan_interval": "Intervalle de mise à jour"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Une entrée Magic Pass existe déjà pour ce point de départ."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Magic Pass",
+        "description": "Les stations choisies ci-dessous ont chacune leur capteur, pratique pour les automatisations.",
+        "data": {
+          "location": "Point de départ",
+          "max_travel": "Temps de trajet maximal pour la meilleure station",
+          "scan_interval": "Intervalle de mise à jour",
+          "tracked_stations": "Stations exposées comme capteurs"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "open_resorts": { "name": "Stations ouvertes", "unit_of_measurement": "stations" },
+      "open_near": { "name": "Stations ouvertes à proximité", "unit_of_measurement": "stations" },
+      "best_resort": { "name": "Meilleure station" },
+      "best_score": { "name": "Note de la meilleure station" },
+      "last_update": { "name": "Dernière mise à jour" },
+      "station": {
+        "name": "{name}",
+        "state": { "open": "Ouverte", "partial": "Partiellement ouverte", "closed": "Fermée" }
+      }
+    }
+  }
+}
