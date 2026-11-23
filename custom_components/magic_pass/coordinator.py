@@ -70,6 +70,7 @@ class MagicPassCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._store: Store[dict[str, Any]] = Store(hass, STORAGE_VERSION, f"{STORAGE_KEY}.{entry.entry_id}")
         self._cache: dict[str, Any] | None = None
         self._open_slugs: set[str] | None = None
+        self._ski_slugs: set[str] | None = None
 
     # ------------------------------------------------------------------ helpers
     @property
@@ -258,9 +259,14 @@ class MagicPassCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         best = max(near, key=lambda s: s["score"]) if near else None
 
         open_slugs = {s["slug"] for s in opened}
+        ski_slugs = {s["slug"] for s in opened if not parser.is_pedestrian(s)}
         if self._open_slugs is not None:
             for station in opened:
-                if station["slug"] not in self._open_slugs:
+                pedestrian = parser.is_pedestrian(station)
+                newly_open = station["slug"] not in self._open_slugs
+                # also fire when a pedestrian-only resort opens its slopes
+                newly_ski = not pedestrian and station["slug"] not in (self._ski_slugs or set())
+                if newly_open or newly_ski:
                     self.hass.bus.async_fire(
                         EVENT_STATION_OPENED,
                         {
@@ -271,9 +277,12 @@ class MagicPassCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                             "lifts": f"{station['lifts_open']}/{station['lifts_total']}",
                             "km": f"{station['km_open']}/{station['km_total']}",
                             "url": station["url"],
+                            "pedestrian": pedestrian,
+                            "kind": station.get("kind", ""),
                         },
                     )
         self._open_slugs = open_slugs
+        self._ski_slugs = ski_slugs
 
         return {
             "updated": dt_util.utcnow().isoformat(timespec="seconds"),

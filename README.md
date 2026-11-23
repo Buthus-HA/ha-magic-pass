@@ -16,7 +16,7 @@ Intégration **non officielle** qui affiche l'état des ~95 stations du [Magic P
   statut et prochaine date d'ouverture, remontées et km ouverts, % ouvert, neige sur 72 h, météo du jour, note /10.
 - **Capteurs** : stations ouvertes, stations ouvertes à proximité, meilleure station (avec sa note et son trajet), dernière mise à jour.
 - **Un capteur par station** pour celles que vous choisissez dans les options (état `open` / `partial` / `closed` et tous les détails en attributs).
-- **Événement** `magic_pass_station_opened` quand une station ouvre, pour vos automatisations.
+- **Événement** `magic_pass_station_opened` quand une station ouvre, pour vos automatisations. Le champ `pedestrian` vaut `true` pour une ouverture réservée aux piétons ; un nouvel événement (avec `pedestrian: false`) est émis quand la station ouvre ensuite ses pistes.
 - Traductions françaises, anglaises et allemandes.
 
 ## Installation
@@ -64,6 +64,9 @@ triggers:
   - trigger: event
     event_type: magic_pass_station_opened
 conditions:
+  # ignorer les ouvertures réservées aux piétons
+  - condition: template
+    value_template: "{{ not trigger.event.data.pedestrian }}"
   - condition: template
     value_template: "{{ trigger.event.data.travel is not none and trigger.event.data.travel <= 90 }}"
 actions:

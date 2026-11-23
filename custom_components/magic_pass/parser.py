@@ -171,6 +171,14 @@ def is_open(state: str) -> bool:
     return state.lower().startswith(("ouvert", "partiel"))
 
 
+_PEDESTRIAN_RE = re.compile(r"walk|pieton|piéton|pedestrian", re.I)
+
+
+def is_pedestrian(station: dict[str, Any]) -> bool:
+    """True when the resort is only open to pedestrians (no skiing)."""
+    return bool(station.get("open")) and bool(_PEDESTRIAN_RE.search(station.get("kind") or ""))
+
+
 def percent_open(row: dict[str, Any], opened: bool) -> int:
     """Share of the resort open, from km of slopes or lifts."""
     if not opened:

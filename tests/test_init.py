@@ -68,11 +68,24 @@ async def test_setup_sensors_ws_and_event(hass: HomeAssistant, aioclient_mock, h
     assert [s["name"] for s in data["stations"]][0] == "Charmey"
 
     events = async_capture_events(hass, EVENT_STATION_OPENED)
-    mock_all(aioclient_mock, opening_page("Ouvert", "3/7", "12/29.2"))
     coordinator = entry.runtime_data
+    # 1) Charmey opens to pedestrians only -> event flagged pedestrian
+    mock_all(aioclient_mock, opening_page("Ouvert", "1/7", "0/29.2", charmey_kind="walking"))
     await coordinator.async_refresh()
     await hass.async_block_till_done()
     assert len(events) == 1 and events[0].data["name"] == "Charmey"
+    assert events[0].data["pedestrian"] is True
+    assert hass.states.get(charmey.entity_id).attributes["pedestrian_only"] is True
+    # 2) Charmey opens its slopes -> a second event, not pedestrian
+    mock_all(aioclient_mock, opening_page("Ouvert", "3/7", "12/29.2"))
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+    assert len(events) == 2 and events[1].data["pedestrian"] is False
+    assert hass.states.get(charmey.entity_id).attributes["pedestrian_only"] is False
+    # 3) no change -> no new event
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+    assert len(events) == 2
     assert hass.states.get(charmey.entity_id).state == "open"
     update = await client.receive_json()
     assert update["event"]["open"] == 2

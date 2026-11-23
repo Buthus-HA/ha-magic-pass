@@ -17,6 +17,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import MagicPassConfigEntry
+from . import parser
 from .const import ATTRIBUTION, CONF_TRACKED, DOMAIN
 from .coordinator import MagicPassCoordinator, utc_from_iso
 
@@ -179,6 +180,7 @@ class MagicPassStationSensor(MagicPassEntity, SensorEntity):
         weather = s.get("weather") or {}
         return {
             "resort": s["name"],
+            "pedestrian_only": parser.is_pedestrian(s),
             "region": s["region"],
             "lifts_open": s["lifts_open"],
             "lifts_total": s["lifts_total"],

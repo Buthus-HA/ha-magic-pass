@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 — 2026-11-23
+- Événement `magic_pass_station_opened` : nouveaux champs `pedestrian` (ouverture piétons uniquement) et `kind`.
+- L'événement est aussi émis quand une station ouverte aux piétons ouvre ses pistes.
+- Capteurs par station : nouvel attribut `pedestrian_only`.
+
 ## 0.2.1 — 2026-11-23
 - Icône de l'intégration (dossier `brand/`, affichée à partir de Home Assistant 2026.3).
 

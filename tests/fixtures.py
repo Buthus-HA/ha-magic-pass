@@ -1,8 +1,8 @@
 """Sample payloads (trimmed copies of the real pages)."""
 
-def row(slug, name, state, lifts, km, info=""):
+def row(slug, name, state, lifts, km, info="", kind=None):
     css = "bg-success" if state != "Fermé" else "bg-danger"
-    marker = "open" if state != "Fermé" else "close"
+    marker = kind or ("open" if state != "Fermé" else "close")
     info_html = (
         f'<span class="text-gray-500 text-sm lg:text-base font-medium mt-6 lg:mt-6 block"> {info} </span>' if info else ""
     )
@@ -27,10 +27,11 @@ FILTERS = '''<div><input name="states[]" v-model="filters.states"
  <label class="font-medium" for="filter-8"> Vaud </label>'''
 
 
-def opening_page(charmey_state="Fermé", charmey_lifts="0/7", charmey_km="0/29.2"):
+def opening_page(charmey_state="Fermé", charmey_lifts="0/7", charmey_km="0/29.2", charmey_kind=None):
     rows = (
         row("charmey-14", "Charmey", charmey_state, charmey_lifts, charmey_km,
-            "<p><strong><u>Ouverture :</u></strong></p><p>19.12.2026 - 07.03.2027</p><p>Week-ends + 05.12 - 13.12.2026</p>")
+            "<p><strong><u>Ouverture :</u></strong></p><p>19.12.2026 - 07.03.2027</p><p>Week-ends + 05.12 - 13.12.2026</p>",
+            charmey_kind)
         + row("villars-gryon-37", "Villars-Gryon", "Ouvert", "2/21", "10/65")
         + row("les-rochers--de--naye-90", "Les Rochers - de - Naye", "Fermé", "0/3", "0/5")
     )
