@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 — 2026-11-23
+- Icône de l'intégration (dossier `brand/`, affichée à partir de Home Assistant 2026.3).
+
 ## 0.2.0 — 2026-11-23
 - Carte : case « Favoris seulement » (option `only_favorites`).
 - Carte : pastille verte/rouge devant le statut d'ouverture.
